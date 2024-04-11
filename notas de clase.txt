@@ -1,0 +1,4 @@
+clase 10/4/24
+
+evaluacion de funciones, para el caso de la lista del pdf es O(n^2) o O(n^3) o O(n)
+sort an array is equal to O(n log n)
