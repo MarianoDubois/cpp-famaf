@@ -174,9 +174,10 @@ void lab_9b(void){
     scanf("%d", &t);
     
     int i,c,A[t],j;
+    j = 0;
     
     printf("introduzca los valores de su array:\n");
-    for (j = 0; j < t; j++){
+    while (j < t){
         scanf("%d", &A[j]);
         printf("valor del array en A[%d] = %d\n", j, A[j]);
     }
@@ -279,8 +280,30 @@ void lab_204(void){
 }
 
 //lab 5 guia 4
-void lab_205(void){
+int sumar_hasta(int numero){
+    int i,sum;
+    i=0;
+    sum=0;
 
+    while(i<=numero){
+        sum = sum + i;
+        i++;
+    }
+
+    return(sum);
+}
+
+void lab_205(void){
+    int input;
+
+    printf("introduzca su numero a sumar hasta:\n");
+    scanf("%d", &input);
+
+    if (input>=0){//se puede "romper" poniendole una letra en la input, no hay type checking en C :P
+        printf("el resultado del lab 5 guia 4 es: %d\n", sumar_hasta(input));
+    }else{
+        printf("error: el numero ingresado no es positivo o 0\n");
+    }
 }
 
 //lab 6 guia 4
@@ -291,7 +314,88 @@ void intercambiar(int tam, int a[], int i, int j){
     a[j] = aux;
 }
 
+void lab_206(void){//goofy ahh getter excersice :skull:
+    int size;
+    printf("introduzca el tamaño de su array:\n");
+    scanf("%d", &size);
+    int i,A[size],pos1,pos2;
+    i=0;
+    printf("introduzca los valores de su array:\n");
+    while (i < size){
+        scanf("%d", &A[i]);
+        printf("valor del array en A[%d] = %d\n", i, A[i]);
+        i++;
+    }
+    printf("introduzca la primera posicion del array que quiere intercambiar:\n");
+    scanf("%d", &pos1);
+    printf("introduzca la segunda posicion del array que quiere intercambiar:\n");
+    scanf("%d", &pos2);
+    if(0<=pos1 && 0<= pos2 && size>pos1 && size>pos2){
+        intercambiar(size,A,pos1,pos2);
+        i = 0;
+        while(i<size){
+            printf("lugar:[%d] valor: %d\n", i, A[i]);
+            i++;
+        }
+    }else{
+        printf("introdujiste una posicion que no existe :(\n");
+    }
+}
+
+//lab 7 guia 4
+void pedir_arreglo(int n_max, int A[]){
+    int i=0;
+    printf("introduzca los valores de su array:\n");
+    while (i < n_max){
+        scanf("%d", &A[i]);
+        printf("valor del array en A[%d] = %d\n", i, A[i]);
+        i++;
+    }
+}
+
+void imprimir_arreglo(int n_max, int A[]){
+    int i = 0;
+    while(i < n_max){
+        printf("lugar:[%d] valor: %d\n", i, A[i]);
+        i++;
+    }
+}
+
+void lab_207(void){
+    int size;
+    printf("introduzca el tamaño de su array:\n");
+    scanf("%d",&size);
+    int A[size];
+    pedir_arreglo(size,A);
+    imprimir_arreglo(size,A);
+}
+
 //lab 8 guia 4
+int sumatoria(int tam, int A[]){
+    int i, sum;
+    i=0;
+    sum=0;
+    while(i<tam){
+        sum = A[i] + sum;
+        i++;
+    }
+    return(sum);
+}
+
+void lab_208(void){
+    int size;
+    printf("introduzca el tamaño de su array:\n");
+    scanf("%d", &size);
+    int i,A[size];
+    i=0;
+    printf("introduzca los valores de su array:\n");
+    while (i < size){
+        scanf("%d", &A[i]);
+        printf("valor del array en A[%d] = %d\n", i, A[i]);
+        i++;
+    }
+    printf("el resultado del lab 8 guia 4 es: %d\n",sumatoria(size,A));
+}
 
 //lab 9 guia 4
 struct div_t{
@@ -385,6 +489,15 @@ int main(void){
             break;
         case 205:
             lab_205();
+            break;
+        case 206:
+            lab_206();
+            break;
+        case 207:
+            lab_207();
+            break;
+        case 208:
+            lab_208();
             break;
         case 209:
             lab_209();
