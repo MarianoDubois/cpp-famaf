@@ -2,6 +2,101 @@
 #include <stdbool.h>
 #include <assert.h>
 
+// USAR CONTROL + F PARA BUSCAR COSAS
+
+/*
+siendo concisos
+
+SIEMPRE tenes que tener un una funcion main() al final del codigo donde ejecutar todas las funciones
+
+int main(){
+    return 0; // El return 0 siempre se espera que este
+}
+
+SIEMPRE las lineas se terminan con ; o { }
+
+SIEMPRE vas a tener que poener al inicion de todo #include <stdio.h> y talvez alguno mas como el de assert
+
+SIEMPRE se corre en consola los siguiente comandos
+
+gcc -Wall -Wextra -std=c99 Clase1.c -o *nombre del archivo a correr*
+si compilo ---->
+./*nombre del archivo*
+
+los tipos de variables son int, char, bool, los arrays son de algunos de esos tipos, ej: int A[*tamaño del array*]
+
+para darle valores a los arrays se usan A[]={1,2,3,4};
+
+--funciones
+la PRIMERA palabra de una funcion te dice que te tiene que devolver un return, ya sea un struct *nombre del struct* o 
+algun tipo como int, bool, etc. o que no devuelva nada con un void.
+la SEGUNDA palabra es el nombre de la funcion.
+la TERCERA (las que estan en parentesis) son las cosas que la funcion pide cuando la queres usar, puede no pedir nada 
+con (void) o puede pedir cosas con sus tipos (int numero, char letra)
+Despues de esto siempre se abren llaves y cuando terminas la funcion le pones otra llave que cierre, si tenes que devolver
+algo pones return y lo que espera que le devuelvas si espera devolucion.
+
+struct *nombre del struct* *nombre de la funcion* (*tipo de la variable* *variable*, ... , *tipo de la variable* *variable*){
+    *codigo*
+    return(*variable del tipo struct*);
+}
+
+void o algun tipo de dato *nombre de la variable* (void o *tipo de la variable* *variable*, ... , *tipo de la variable* *variable*){
+    *codigo*
+    return(*variable del tipo de dato que te pide devolver en la declaracion de la funcion*) // SI TENES VOID NO SE USA RETURN NI NADA
+}
+
+syntaxis de algunas cosas:
+
+--mostrar cosas en consola:
+printf("texto normal %d el % con algo despues es el valor de la variable \n", *variable*); // el \n no hace falta pero es clean
+
+--pedir cosas por consola:
+scanf("%d %c %s %b",&*variable*, ... ,&*variable*,); // %d es para introducir decimales, %c para chars, %s para strings,
+%b para booleans, como recomendacion personal, ponganle un espacio despues de cada %c o %s porque pasan cosas malas sino.
+
+--while loop:
+while(*condicion*){
+    *algo que descumpla la condicion en algun momento*
+}
+
+--ifs elses else if
+if(*codicion*){
+    *codigo*
+}else if(*codicion*){
+    *mas codigo*
+}else{
+    *aun mas codigo*
+}
+
+--structs
+struct *nombre del struct*{
+    *tipo de la variable* *variable*;
+    ...
+    *tipo de la variable* *variable*;
+};
+
+--typedef struct // son lo mismo que una struct pero cuando la quieras usar en una funcion o llamada no necesitas siempre
+typedef struct{  // poner struct *nombre del struct *sino que solo pones *nombre del struct*
+    *tipo de la variable* *variable*;
+    ...
+    *tipo de la variable* *variable*;
+}*nombre de la typedef struct*; 
+
+--inicializacion y asignacion de valores de un struct
+struct *nombre del struct* *nombre de la variable*;
+*nombre de la variable* *nombre de la variable a rellenar del struct*;
+...
+*nombre de la variable* *nombre de la variable a rellenar del struct*;
+
+--assert
+assert(*condiciones de las variable*); // con condicion de las varibales es que se tiene que cumplir en ese momento del codigo o breakea automaticamente
+
+GLHF
+*/
+
+/////////////////////////////////////////////////////////////{  ejs NARI  }/////////////////////////////////////////////////////////////////////////////////
+
 //lab1
 void lab_1(void){
     printf("introduzca 3 variables tipo int:\n");
@@ -433,7 +528,7 @@ void lab_209(void){
     }
 }
 
-
+///////////////////////////////////////////////////////////{  main function  }///////////////////////////////////////////////////////////////////////////////////////
 
 int main(void){
     int condition;
@@ -506,3 +601,832 @@ int main(void){
 
     return 0;
 }
+
+///////////////////////////////////////////////////////{  ejs LuLa  }//////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+
+struct div_t 
+{
+	int cociente;
+	int resto;
+};
+
+struct div_t division(int x, int y)
+{
+	int i=0;
+	struct div_t res;
+	while(x>=y)
+	{
+		x=x-y;
+		i+=1;
+	}
+	res.cociente=i;
+	res.resto=x;
+	return res;
+}
+
+int main()
+{
+	int a,b;
+	struct div_t resultado;
+	printf("Ingrese dos numeros\n");
+	scanf("%d %d", &a, &b);
+	assert(a>=0 && b>0);
+	resultado = division(a,b);
+	printf("El cociente de la division es: %d \n", resultado.cociente);
+	printf("El resto de la division es: %d \n", resultado.resto);
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#define tam 4
+
+
+void pedir_arreglo(int n_max, int a[])
+{
+	int i=0;
+	int b;
+	printf("Ingrese los valores del arreglo \n");
+	
+	while(i<n_max)
+	{
+		scanf("%d", &b);
+		a[i]=b;
+		i+=1;
+	}
+}
+
+void imprimir_arreglo(int n_max, int a[])
+{
+	printf("El arreglo ingresado es: ");
+	int i=0;
+	while(i<n_max)
+	{
+		printf(" %d ", a[i]);
+		i+=1;
+	}
+}
+
+int main()
+{
+	int a[tam];
+	pedir_arreglo(tam, a);
+	imprimir_arreglo(tam, a);
+	return 0;
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+#define tam 5
+
+struct comp_t 
+{
+	int menores;
+	int iguales;
+	int mayores;
+};
+
+struct comp_t cuantos(int taman, int a[], int elem)
+{
+	int i=0;
+	struct comp_t resp;
+	resp.mayores=0;
+	resp.menores=0;
+	resp.iguales=0;
+	while (i<taman)
+	{
+		if(a[i]>elem)
+			resp.mayores += 1;
+		else if (a[i]<elem)
+			resp.menores +=1;
+		else
+			resp.iguales += 1;
+		i+=1;
+	}
+	return resp;
+}
+
+int main()
+{
+	int i=0,b, a[tam];
+	struct comp_t respuesta;
+	printf("Ingrese los valores del arreglo \n");
+	while(i<tam)
+	{
+		scanf("%d", &b);
+		a[i]=b;
+		i+=1;
+	}
+	printf("Ingrese el numero m con el que quiere comparar \n");
+	scanf("%d", &b);
+	respuesta = cuantos(tam, a, b);
+	printf("Hay %d elementos mayores a m en el arreglo \n", respuesta.mayores);
+	printf("Hay %d elementos menores a m en el arreglo \n", respuesta.menores);
+	printf("Hay %d elementos iguales a m en el arreglo \n", respuesta.iguales);
+	return 0;
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    ///Lab 1
+    printf("Lab 1\n");
+    int x, y, z, r1, r2, r4;
+    _Bool r3, r5,r6;
+    printf("Ingrese x, y, z\n");
+    scanf("%d %d %d", &x, &y, &z);
+
+    r1 = x + y + 1;
+    r2 = z * z + y * 45 - 15 * x;
+    r3 = y - 2 == (x * 3 + 1) % 5;
+    r4 = y / 2 * x;
+    r5 = y < x * z;
+
+    printf("r1 = %d\n", r1);
+    printf("r2 = %d\n", r2);
+    printf("r3 = %d\n", r3);
+    printf("r4 = %d\n", r4);
+    printf("r5 = %d\n", r5);
+
+    ///Lab 2
+    printf("Lab 2\n");
+    x = 4;
+    y = -4;
+    z = 8;
+
+    _Bool b, w;
+
+    b = 1;
+    w = 1;
+
+    r3 = x%4 == 0;
+    r5 = x+y == 0 && y - x == (-1) * z;
+    r6 = !(b && w);
+
+    printf("r3 = %d\n", r3);
+    printf("r5 = %d\n", r5);
+    printf("r6 = %d\n", r6);
+
+    ///Lab 3
+    printf("Lab 3\n");
+    ///a
+    scanf("%d",&x);
+    x = 5;
+    printf("x=%d\n", x);
+
+    ///b
+    scanf("%d %d",&x, &y);
+    x = x + y;
+    y = y + y;
+    printf("x=%d\n", x);
+    printf("y=%d\n", y);
+
+    ///c
+    scanf("%d %d",&x, &y);
+    y = y + y;
+    x = x + y;
+    printf("y=%d\n", y);
+    printf("x=%d\n", x);
+
+
+    ///Lab 4
+
+    ///Es posible implementarlo, pero no en una sola linea. Ser�a igual que el punto c
+
+    ///Lab 5
+    printf("Lab 5\n");
+    ///a , b , c
+    scanf("%d %d",&x, &y);
+    if (x>=y)
+        x=0;
+    else
+        x=2;
+    printf("x=%d\n", x);
+
+   ///Lab 6
+   printf("Lab 6\n");
+   int m;
+   scanf("%d %d %d %d",&x, &y, &z, &m);
+   if (x<y)
+        m=x;
+    else
+        m=y;
+    printf("m=%d\n", m);
+    scanf("%d %d %d %d",&x, &y, &z, &m);
+    if (m>=z)
+        m=z;
+    printf("m=%d\n", m);
+
+    ///Lab 7
+    printf("Lab 7\n");
+    ///a
+    int i;
+    scanf("%d",&i);
+    while (i!=0)
+        i-=1;
+    printf("i=%d\n", i);
+
+    ///b
+    scanf("%d",&i);
+    while (i!=0)
+        i=0;
+    printf("i=%d\n", i);
+
+    ///c
+    scanf("%d",&i);
+    while (i<0)
+        i-=1;
+    printf("i=%d\n", i);
+    ///No funciona con negativos ( es un ciclo infinito )
+
+    ///Lab 8
+    printf("Lab 8\n");
+
+    ///a
+    ///Divisi�n entera de x/y
+    scanf("%d %d %d",&x, &y, &i);
+    i = 0;
+    while (x>=y)
+    {
+        x-=y;
+        i+=1;
+    }
+    printf("i=%d\n", i);
+
+    ///b
+    ///Ver si un n�mero es primo
+    _Bool res;
+    scanf("%d %d %d",&x, &i, &res);
+    i=2;
+    res = 1;
+    while (i<x && res)
+    {
+        res = res && (x%i!=0);
+        i=i+1;
+    }
+    printf("res=%d\n", res);
+
+    ///Lab 9
+    printf("Lab 9\n");
+
+    ///a
+    int A[4], s;
+    scanf("%d %d",&i, &s);
+    for (int j=0; j<4 ; j++)
+    {
+        int d;
+        scanf("%d",&d);
+        A[j]=d;
+    }
+    i = 0;
+    s = 0;
+    while (i < 4)
+    {
+        s = A[i];
+        i++;
+    }
+    printf("s=%d\n", s);
+
+    ///b
+    ///Cuenta los elementos positivos de x
+    int c;
+    scanf("%d %d",&i, &c);
+    for (int j=0; j<4 ; j++)
+    {
+        int d;
+        scanf("%d",&d);
+        A[j]=d;
+    }
+    i = 0;
+    c = 0;
+    while (i < 4)
+    {
+        if (A[i] > 0)
+            c++;
+        i++;
+    }
+    printf("c=%d\n", c);
+
+    return 0;
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int respuesta;
+    do
+    {
+        printf("Ingrese el n�mero de lab al que quiere acceder\n");
+        printf("O ingrese 0 para salir\n");
+        scanf("%d", &respuesta);
+
+        switch(respuesta) {
+            case 1:
+                {
+                    int x, y, z;
+                    printf("Ingrese x, y \n");
+                    scanf("%d %d", &x, &y);
+
+                    z=x;
+                    x=y;
+                    y=z;
+
+                    printf("x=%d\n", x);
+                    printf("y=%d\n", y);
+
+                    break;
+                }
+            case 2:
+                {
+                    int x, y, z, k;
+                    printf("Ingrese x, y \n");
+                    scanf("%d %d", &x, &y);
+
+                    y+=x;
+                    x++;
+
+                    printf("x=%d\n", x);
+                    printf("y=%d\n", y);
+
+                    printf("Ingrese x, y, z \n");
+                    scanf("%d %d %d", &x, &y, &z);
+
+                    k=y;
+
+                    y += x+z;
+                    z = k+x;
+                    x = k;
+
+                    printf("x=%d\n", x);
+                    printf("y=%d\n", y);
+                    printf("z=%d\n", z);
+
+                    break;
+                }
+            case 4:
+                {
+                    int x,y, E;
+                    printf("Ingrese x, y \n");
+                    scanf("%d %d", &x, &y);
+
+                    if (x>=y)
+                        E=y;
+                    else
+                        E=x;
+                    printf("Elmenor de los dos es %d\n", E);
+
+                    /// b
+
+                    printf("Ingrese x\n");
+                    scanf("%d", &x);
+
+                    if (x<0)
+                        x = -1*x;
+
+                    printf("El valor absoluto de x es %d\n", x);
+
+                    break;
+                }
+            case 0:
+                printf("Saliendo...");
+        }
+    }
+    while (respuesta!=0);
+    return 0;
+}
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+#include <stdbool.h>
+#define tam 5
+
+bool todos_pares(int taman, int a[])
+{
+	int i=0;
+	while(i<taman)
+	{
+		if(a[i]%2 != 0)
+		{
+			return 0;
+		}
+		i+=1;
+	}
+	return 1;
+}
+
+
+bool todos_impares(int taman, int a[])
+{
+	int i=0;
+	while(i<taman)
+	{
+		if(a[i]%2 == 0)
+		{
+			return 0;
+		}
+		i+=1;
+	}
+	return 1;
+}
+
+int minimo_pares(int taman, int a[])
+{
+	int resp = INT_MAX, i=0;
+	while (i<taman)
+	{
+		if(a[i]%2 == 0)
+		{
+			if(a[i]<resp)
+			{
+				resp = a[i];
+			}
+		}
+		i+=1;
+	}
+	return resp;
+}
+
+int minimo_impares(int taman, int a[])
+{
+	int resp = INT_MAX, i=0;
+	while (i<taman)
+	{
+		if(a[i]%2 == 1)
+		{
+			if(a[i]<resp)
+			{
+				resp = a[i];
+			}
+		}
+		i+=1;
+	}
+	return resp;
+}
+
+int main()
+{
+	int i=0,b, a[tam];
+	printf("Ingrese los valores del arreglo \n");
+	while(i<tam)
+	{
+		scanf("%d", &b);
+		a[i]=b;
+		i+=1;
+	}
+
+	if(todos_pares(tam,a))
+	{
+		printf("No hay elementos impares \n");
+		printf("El mínimo valor par del arreglo es: %d \n", minimo_pares(tam, a));
+	}
+	else if(todos_impares(tam,a))
+	{
+		printf("No hay elementos pares \n");
+		printf("El mínimo valor impar del arreglo es: %d \n", minimo_impares(tam, a));
+	}
+	else
+	{
+		printf("El mínimo valor par del arreglo es: %d \n", minimo_pares(tam, a));
+		printf("El mínimo valor impar del arreglo es: %d \n", minimo_impares(tam, a));
+	}
+	return 0;
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#define tam 5
+
+bool todos_pares(int taman, int a[])
+{
+	int i=0;
+	while(i<taman)
+	{
+		if(a[i]%2 != 0)
+		{
+			return 0;
+		}
+		i+=1;
+	}
+	return 1;
+}
+
+bool existe_multiplo(int m, int taman, int a[])
+{
+	int i=0;
+	while(i<taman)
+	{
+		if(a[i]%m == 0)
+		{
+			return 1;
+		}
+		i+=1;
+	}
+	return 0;
+}
+
+int main()
+{
+	int i=0,b, a[tam];
+	bool resp;
+	printf("Ingrese los valores del arreglo \n");
+	while(i<tam)
+	{
+		scanf("%d", &b);
+		a[i]=b;
+		i+=1;
+	}
+	printf("Ingrese 1 para ejecutar todos_pares y 2 para ejecutar existe_multiplo \n");
+	scanf("%d", &b);
+	if(b==1)
+	{
+		resp = todos_pares(tam, a);
+		if(resp==0)
+		{
+			printf("No son todos pares \n");
+		}
+		else
+		{
+			printf("Son todos pares \n");
+		}	
+	}
+	else
+	{
+		printf("Ingrese m \n");
+		scanf("%d", &b);
+		resp = existe_multiplo(b,tam, a);
+		if(resp==0)
+		{
+			printf("No existe multiplo de m en el arreglo \n");
+		}
+		else
+		{
+			printf("Existe multiplo de m en el arreglo \n");
+		}
+	}
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+
+bool esprimo(int b)
+{
+	int i = 2;
+	if (b < 2) 
+		return false;
+	while (i < b )
+	{
+		if (b % i == 0)
+			return false;
+		i += 1;
+	}
+	return true;
+}
+
+int nesimo_primo(int N)
+{
+	int contador = 0, i = 2;
+	while (contador < N)
+	{
+		if (esprimo(i))
+		{
+			contador += 1;
+		}
+		if (contador < N)
+			i += 1;
+	}
+	return i;
+}
+
+int main()
+{
+	int a;
+	printf("Ingrese un numero\n");
+	scanf(" %d", &a);
+	printf("El primo numero %d es: %d", a, nesimo_primo(a));
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+#define tam 5
+
+int prim_iguales(int taman, int a[])
+{
+	int i=0;
+	while(a[i]==a[0])
+	{
+		i+=1;
+	}
+	return i;
+}
+
+int main()
+{
+	int i=0,b, a[tam];
+	printf("Ingrese los valores del arreglo \n");
+	while(i<tam)
+	{
+		scanf("%d", &b);
+		a[i]=b;
+		i+=1;
+	}
+	printf("La longitud del tramo inicial mas largo cuyos elementos son todos iguales es: %d ", prim_iguales(tam,a));
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+
+
+void intercambiar(int tam, int a[], int i, int j)
+{
+	int ii;
+	ii=a[i];
+	a[i]=a[j];
+	a[j]=ii;
+	printf("El arreglo modificado es: \n");
+	int k=0;
+	while (k<tam)
+	{
+		printf("%d  ",a[k]);
+		k+=1;
+	}
+}
+
+int main()
+{
+	#define tam 3
+	int i,j,k=0;
+	int a[tam];
+	printf("Ingrese i, j\n");
+	scanf("%d %d", &i, &j);
+	printf("Ingrese los elementos del arreglo\n");
+	while (k<tam)
+	{
+		int b;
+		scanf("%d", &b);
+		a[k]=b;
+		k+=1;
+	}
+	assert(i>=0 && i<tam && j>=0 && j<tam);
+	intercambiar(tam,a,i,j);
+}
+	
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+#define tam 5
+
+struct datos_t 
+{
+	float maximo;
+	float minimo;
+	float promedio;
+};
+
+struct datos_t stats(int taman, float a[])
+{
+	struct datos_t res;
+	int i=0;
+	float ma=INT_MIN, mi=INT_MAX,sum=0;
+	while(i<taman)
+	{
+		if(a[i]>ma)
+		{
+			ma=a[i];
+		}
+		else if (a[i]<mi)
+		{
+			mi=a[i];
+		}
+		sum+=a[i];
+		i+=1;
+	}
+	res.maximo=ma;
+	res.minimo=mi;
+	res.promedio=sum/taman;
+	return res;
+}
+
+int main()
+{
+	int i=0;
+	float b,a[tam];
+	struct datos_t respuesta;
+	printf("Ingrese los valores del arreglo \n");
+	while(i<tam)
+	{
+		scanf("%f", &b);
+		a[i]=b;
+		i+=1;
+	}
+	respuesta = stats(tam, a);
+	printf("El maximo elemento es: %f \n", respuesta.maximo);
+	printf("El minimo elemento es: %f \n", respuesta.minimo);
+	printf("El promedio de los elementos es: %f", respuesta.promedio);
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int suma_hasta(int n)
+{
+	int suma=0;
+	while (n>0)
+	{
+		suma+=n;
+		n-=1;
+	}
+	return suma;
+}
+
+int main()
+{
+	int num;
+	printf("Ingrese un número \n");
+	scanf("%d", &num);
+	if(num<0)
+	{
+		printf("Error, ha ingresado un numero NO natural\n");
+	}
+	else
+	{
+		printf("%d",suma_hasta(num));
+	}
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#define tam 5
+
+int sumatoria(int taman, int a[])
+{
+	int suma=0,i=0;
+	while(i<taman)
+	{
+		suma+=a[i];
+		i+=1;
+	}
+	return suma;
+}
+
+int main()
+{
+	int i=0,b, a[tam], resultado;
+	printf("Ingrese los valores del arreglo \n");
+	while(i<tam)
+	{
+		scanf("%d", &b);
+		a[i]=b;
+		i+=1;
+	}
+	resultado = sumatoria(tam, a);
+	printf("La suma de los elementos del arreglo es: %d ",resultado);
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+
+bool es_vocal(char letra)
+{
+    if (letra == 'a' || letra == 'e' ||  letra == 'i' ||  letra == 'o' || letra == 'u' ||  letra == 'A' || letra == 'E' || letra == 'I' || letra == 'O' || letra == 'U' )
+        return 1;
+    return 0;
+}
+
+char pedir_char()
+{
+    char a;
+    printf("Ingrese un caracter \n");
+    scanf("%c", &a);
+    return a;
+}
+
+int main()
+{
+    bool c;
+    c = (es_vocal(pedir_char()));
+    if (c == true)
+    {
+        printf("El caracter que ingresó era una vocal \n");
+    }
+    else
+        printf("El caracter que ingresó NO era una vocal \n");
+    return 0;
+}
+
+*/
