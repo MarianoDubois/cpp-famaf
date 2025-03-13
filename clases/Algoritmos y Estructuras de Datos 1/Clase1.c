@@ -1429,4 +1429,193 @@ int main()
     return 0;
 }
 
+
+/////////////////////////////////////////////////////////////{  Lichi parcial  }///////////////////////////////////////////////////////////////////////////////////
+
+Ejercicio 1
+//+ Imports
+#include <stdio.h>
+#include <stdbool.h>
+#include <assert.h>
+
+//+ Consts
+const int N = 4;
+
+//+ Functions
+int sum_init(int tam, int a[], int n)
+{
+    //! Verify with assert
+    assert(n <= tam);
+
+    //# Init Vars
+    int sum = 0, i = 0;
+
+    //? Loop
+    while (i < n)
+    {
+        sum += a[i];
+        i++;
+    }
+
+    return sum;
+}
+
+//+ Main
+int main(void)
+{
+    //# Init Vars
+    int pos = 0, num, array[N];
+    int suma;
+
+    //? Loop for insert data into array
+    while(pos < N) {
+        //% Required input
+            printf("Ingresa el valor para A[%d]: ", pos);
+            scanf("%d", &array[pos]);
+            pos++;
+    } pos = 0;
+
+    //% Required input
+    printf("Ingresa un n°: ", num);
+    scanf("%d", &num);
+
+    //? Call functions
+    suma = sum_init(N, array, num);
+
+    //! Logic
+    printf("\nArray: \n   ");
+    while (pos < N) {
+        printf("Array[%d] = %d, ", pos, array[pos]);
+        pos++;
+    }
+
+    //* Output
+    printf("\n\nEl suma de los primeros %d elementos del array es de '%d'\n\n", num, suma);
+
+    return 0;
+}
+Ejercicio 2
+⚠️ Incluir todo lo necesario para que compile y ejecute:
+Inclusión de librerías
+Definición de función del Ejercicio 1
+Función main()
+La respuesta a este ejercicio debe poderse compilar sin errores
+//+ Imports
+#include <stdio.h>
+#include <stdbool.h>
+#include <assert.h>
+
+//+ Consts
+#define N 4
+
+//+ Functions
+int sum_init(int tam, int a[], int n)
+{
+    //! Verify with assert
+    assert(n <= tam);
+
+    //# Init Vars
+    int sum = 0, i = 0;
+
+    //? Loop
+    while (i < n)
+    {
+        sum += a[i];
+        i++;
+    }
+
+    return sum;
+}
+
+//+ Main
+int main(void)
+{
+    //# Init Vars
+    int pos = 0, num, array[N];
+    int suma;
+
+    //? Loop for insert data into array
+    while(pos < N) {
+        //% Required input
+            printf("Ingresa el valor para A[%d]: ", pos);
+            scanf("%d", &array[pos]);
+            pos++;
+    } pos = 0;
+
+    //% Required input
+    printf("Ingresa un n°: ", num);
+    scanf("%d", &num);
+
+    //? Call functions
+    suma = sum_init(N, array, num);
+
+    //! Logic
+    printf("\nArray: \n   ");
+    while (pos < N) {
+        printf("Array[%d] = %d, ", pos, array[pos]);
+        pos++;
+    }
+
+    //* Output
+    printf("\n\nEl suma de los primeros %d elementos del array es de '%d'\n\n", num, suma);
+
+    return 0;
+}
+Ejercicio 3
+Ejemplo 1:
+
+Ingresa el valor para A[0]: 3
+Ingresa el valor para A[1]: 6
+Ingresa el valor para A[2]: 5
+Ingresa el valor para A[3]: 8
+Ingresa un n°: 3
+
+Array: 
+   Array[0] = 3, Array[1] = 6, Array[2] = 5, Array[3] = 8, 
+
+El suma de los primeros 3 elementos del array es de '14'
+
+
+Ejemplo 2:
+
+Ingresa el valor para A[0]: 1
+Ingresa el valor para A[1]: 6
+Ingresa el valor para A[2]: 3
+Ingresa el valor para A[3]: 7
+Ingresa un n°: 4
+
+Array: 
+   Array[0] = 1, Array[1] = 6, Array[2] = 3, Array[3] = 7, 
+
+El suma de los primeros 4 elementos del array es de '17'
+
+
+Ejemplo 3:
+
+Ingresa el valor para A[0]: 9
+Ingresa el valor para A[1]: 77
+Ingresa el valor para A[2]: 5
+Ingresa el valor para A[3]: 66
+Ingresa un n°: 2
+
+Array: 
+   Array[0] = 9, Array[1] = 77, Array[2] = 5, Array[3] = 66, 
+
+El suma de los primeros 4 elementos del array es de '86'
+
+
+Ejemplo 4:
+
+Ingresa el valor para A[0]: 7
+Ingresa el valor para A[1]: 44
+Ingresa el valor para A[2]: 8
+Ingresa el valor para A[3]: 9
+Ingresa un n°: 0
+
+Array: 
+   Array[0] = 7, Array[1] = 44, Array[2] = 8, Array[3] = 9, 
+
+El suma de los primeros 4 elementos del array es de '0'
+
+
 */
