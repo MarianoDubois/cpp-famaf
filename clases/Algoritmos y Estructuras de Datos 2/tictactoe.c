@@ -3,8 +3,8 @@
 #include <stdbool.h> /* Tipo bool             */
 
 #include <assert.h>  /* assert() */
-
-#define CELL_MAX (3 * 3 - 1)
+#define n 3
+#define CELL_MAX (n * n - 1)
 
 void print_sep(int length) {
     printf("\t ");
@@ -13,36 +13,65 @@ void print_sep(int length) {
 
 }
 
-void print_board(char board[3][3])
+void print_board(char board[n][n])
 {
     int cell = 0;
 
-    print_sep(3);
-    for (int row = 0; row < 3; ++row) {
-        for (int column = 0; column < 3; ++column) {
+    print_sep(n);
+    for (int row = 0; row < n; ++row) {
+        for (int column = 0; column < n; ++column) {
             printf("\t | %d: %c ", cell, board[row][column]);
             ++cell;
         }
         printf("\t | \n");
-        print_sep(3);
+        print_sep(n);
     }
 }
 
-char get_winner(char board[3][3])
+char get_winner(char board[n][n])
 {
     char winner = '-';
-    //
-    // TODO: COMPLETAR
-    //
-    return winner;
+    
+    char col[n];
+    char trace[n];
+    char inverse_trace[n];
+
+    int i = 0;
+    int j = 0;
+    
+    while(i<n){
+        while(j<n){
+            col[j] = board[i][j];
+            if(board[i][j] == board[i][i]){
+                trace[i] = board[i][j];
+            }else if(board[i][j] == board[i][(n-1)-i]){
+                inverse_trace[i] = board[i][j];
+            }
+            
+            j++;
+        }
+        j=0;
+        
+        if(col == "XXX" || trace == "XXX" || inverse_trace == "XXX"){
+            winner = 'X';
+        }else if(col == "OOO" || trace == "OOO" || inverse_trace == "OOO"){
+            winner = 'O';
+        }
+
+        i++;
+    }return winner;
 }
 
-bool has_free_cell(char board[3][3])
+bool has_free_cell(char board[n][n])
 {
     bool free_cell=false;
-    //
-    // TODO: COMPLETAR
-    //
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            if(board[i][j] == '-'){
+                bool free_cell=true;
+            }
+        }
+    }
     return free_cell;
 }
 
@@ -50,7 +79,7 @@ int main(void)
 {
     printf("TicTacToe [InCoMpLeTo :'(]\n");
 
-    char board[3][3] = {
+    char board[n][n] = {
         { '-', '-', '-' },
         { '-', '-', '-' },
         { '-', '-', '-' }
@@ -69,8 +98,8 @@ int main(void)
             exit(EXIT_FAILURE);
         }
         if (cell >= 0 && cell <= CELL_MAX) {
-            int row = cell / 3;
-            int colum = cell % 3;
+            int row = cell / n;
+            int colum = cell % n;
             if (board[row][colum] == '-') {
                 board[row][colum] = turn;
                 turn = turn == 'X' ? 'O' : 'X';
