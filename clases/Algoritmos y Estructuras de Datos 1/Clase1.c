@@ -177,13 +177,6 @@ void lab_6(void){
 }//el programa returnea el valor minimo de los 4 que se le pasan, el valor final de m es el valor minimo de entre los 4
 
 //Lab7
-void lab_7(void){
-    int i;
-    printf("introduzca el valor que quiere que su i tenga:\n");
-    scanf("%d", &i);
-    
-    printf("el resultado del 7a es: %d\nel resultado del 7b es: %d\nel resultado del 7c es: %d\n", lab_71(i),lab_72(i),lab_73(i));
-}
 int lab_71(int i){
     while(i!=0){
         i = i-1;
@@ -205,6 +198,14 @@ int lab_73(int i){
     }
     return(i);
 }
+void lab_7(void){
+    int i;
+    printf("introduzca el valor que quiere que su i tenga:\n");
+    scanf("%d", &i);
+    
+    printf("el resultado del 7a es: %d\nel resultado del 7b es: %d\nel resultado del 7c es: %d\n", lab_71(i),lab_72(i),lab_73(i));
+}
+
 
 //Lab8a
 void lab_8a(void){
@@ -528,6 +529,31 @@ void lab_209(void){
     }
 }
 
+bool compare_string(char string_1[3], char string_2[3] ){
+    int k = 0;
+    bool is_equal = 1;
+    
+    while(k<3 && is_equal == 1){
+        if(string_1[k] == string_2[k]){
+            k++;
+        }else{
+            is_equal = 0;
+            k++;
+        }
+    }
+    return is_equal;
+}
+
+void lab_210(void){
+
+    char s1[3] = {'X','X','X'};
+    char s2[3] = {'X','X','X'}; 
+
+    bool resultado = compare_string(s1,s2);
+
+    printf("%d",resultado);
+}
+
 ///////////////////////////////////////////////////////////{  main function  }///////////////////////////////////////////////////////////////////////////////////////
 
 int main(void){
@@ -596,6 +622,9 @@ int main(void){
             break;
         case 209:
             lab_209();
+            break;
+        case 210:
+            lab_210();
             break;
     }
 

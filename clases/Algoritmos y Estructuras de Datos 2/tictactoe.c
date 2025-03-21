@@ -28,37 +28,53 @@ void print_board(char board[n][n])
     }
 }
 
+bool strc(char string_1[n], char string_2[n] ){
+    int k = 0;
+    bool is_equal = 1;
+    
+    while(k<3 && is_equal == 1){
+        if(string_1[k] == string_2[k]){
+            k++;
+        }else{
+            is_equal = 0;
+            k++;
+        }
+    }
+    return is_equal;
+}
+
 char get_winner(char board[n][n])
 {
     char winner = '-';
     
+    char row[n];
     char col[n];
     char trace[n];
     char inverse_trace[n];
 
-    int i = 0;
-    int j = 0;
-    
-    while(i<n){
-        while(j<n){
-            col[j] = board[i][j];
+
+    for(int i = 0; i<n ; i++){
+        for(int j = 0; j<n ; j++){
+            col[j] = board[j][i];
+            row[j] = board[i][j];
+            printf("\nrow=%s\ncol=%s\ntr=%s\ninvtr=%s\n",row,col,trace,inverse_trace);
             if(board[i][j] == board[i][i]){
                 trace[i] = board[i][j];
-            }else if(board[i][j] == board[i][(n-1)-i]){
+                printf("\ntr=%s\ninvtr=%s\n",trace,inverse_trace);
+            }else if(board[i][j] == board[i][(n-1)+(1)-(i-1)]){
                 inverse_trace[i] = board[i][j];
+                printf("\ninvtr=%s\n",inverse_trace);
             }
-            
-            j++;
         }
-        j=0;
-        
-        if(col == "XXX" || trace == "XXX" || inverse_trace == "XXX"){
+
+        if(strc(row,"XXX")==1 || strc(col,"XXX")==1 || strc(trace,"XXX")==1 || strc(inverse_trace,"XXX")==1){
+            printf("\nrow=%s\ncol=%s\ntr=%s\ninvtr=%s\n",row,col,trace,inverse_trace);
             winner = 'X';
-        }else if(col == "OOO" || trace == "OOO" || inverse_trace == "OOO"){
+        }else if(strc(row,"OOO")==1 || strc(col,"OOO")==1 || strc(trace,"OOO")==1 || strc(inverse_trace,"OOO")==1){
+            printf("\nrow=%s\ncol=%s\ntr=%s\ninvtr=%s\n",row,col,trace,inverse_trace);
             winner = 'O';
         }
 
-        i++;
     }return winner;
 }
 
@@ -68,7 +84,7 @@ bool has_free_cell(char board[n][n])
     for(int i = 0; i < n; i++){
         for(int j = 0; j < n; j++){
             if(board[i][j] == '-'){
-                bool free_cell=true;
+                free_cell = true;
             }
         }
     }
