@@ -28,7 +28,7 @@ void print_board(char board[n][n])
     }
 }
 
-bool strc(char string_1[n], char string_2[n] ){
+bool string_comparison(char string_1[n], char string_2[n] ){
     int k = 0;
     bool is_equal = 1;
     
@@ -67,19 +67,21 @@ char get_winner(char board[n][n])
                 inverse_trace[i] = board[i][j];
             }
         }
+    }
+    
+    if(string_comparison(row,"XXX")==1 || string_comparison(col,"XXX")==1 || string_comparison(trace,"XXX")==1 || string_comparison(inverse_trace,"XXX")==1){
+        winner = 'X';
+    }else if(string_comparison(row,"OOO")==1 || string_comparison(col,"OOO")==1 || string_comparison(trace,"OOO")==1 || string_comparison(inverse_trace,"OOO")==1){
+        winner = 'O';
+    }
 
-        if(strc(row,"XXX")==1 || strc(col,"XXX")==1 || strc(trace,"XXX")==1 || strc(inverse_trace,"XXX")==1){
-            winner = 'X';
-        }else if(strc(row,"OOO")==1 || strc(col,"OOO")==1 || strc(trace,"OOO")==1 || strc(inverse_trace,"OOO")==1){
-            winner = 'O';
-        }
-        
-    }return winner;
+    return winner;
 }
 
 bool has_free_cell(char board[n][n])
 {
     bool free_cell=false;
+    
     for(int i = 0; i < n; i++){
         for(int j = 0; j < n; j++){
             if(board[i][j] == '-'){
