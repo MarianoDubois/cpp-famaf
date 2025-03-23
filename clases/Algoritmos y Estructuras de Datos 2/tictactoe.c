@@ -55,26 +55,25 @@ char get_winner(char board[n][n])
 
     for(int i = 0; i<n ; i++){
         for(int j = 0; j<n ; j++){
+            
             col[j] = board[j][i];
             row[j] = board[i][j];
-            printf("\nrow=%s\ncol=%s\ntr=%s\ninvtr=%s\n",row,col,trace,inverse_trace);
-            if(board[i][j] == board[i][i]){
+            
+            if(j == i){
                 trace[i] = board[i][j];
-                printf("\ntr=%s\ninvtr=%s\n",trace,inverse_trace);
-            }else if(board[i][j] == board[i][(n-1)+(1)-(i-1)]){
+            }
+            
+            if(j == n-1-i){
                 inverse_trace[i] = board[i][j];
-                printf("\ninvtr=%s\n",inverse_trace);
             }
         }
 
         if(strc(row,"XXX")==1 || strc(col,"XXX")==1 || strc(trace,"XXX")==1 || strc(inverse_trace,"XXX")==1){
-            printf("\nrow=%s\ncol=%s\ntr=%s\ninvtr=%s\n",row,col,trace,inverse_trace);
             winner = 'X';
         }else if(strc(row,"OOO")==1 || strc(col,"OOO")==1 || strc(trace,"OOO")==1 || strc(inverse_trace,"OOO")==1){
-            printf("\nrow=%s\ncol=%s\ntr=%s\ninvtr=%s\n",row,col,trace,inverse_trace);
             winner = 'O';
         }
-
+        
     }return winner;
 }
 
