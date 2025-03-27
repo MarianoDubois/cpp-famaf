@@ -13,6 +13,8 @@ static unsigned int partition(int a[], unsigned int izq, unsigned int der) {
     unsigned int i = izq + 1;
     unsigned int j = der;
 
+    array_dump(a, der);
+
     while (i <= j)
     {
         if (goes_before(a[i], a[ppiv]))
