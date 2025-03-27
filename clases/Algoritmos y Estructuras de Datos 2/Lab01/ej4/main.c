@@ -70,6 +70,16 @@ int main(int argc, char *argv[]) {
     printf("statistics for selection_sort\n");
     printf("time elapsed=%g,    comparisons: %10u,    swaps: %10u\n", calculate_elapsed_time(), comparisons_number(), swaps_number());
 
+
+
+    reset_comparisons_counter();
+    reset_swaps_counter();
+    set_current_time();
+
+    insertion_sort(copy, length);
+
+    printf("statistics for selection_sort\n");
+    printf("time elapsed=%g,    comparisons: %10u,    swaps: %10u\n", calculate_elapsed_time(), comparisons_number(), swaps_number());
     /* all the same for insertion_sort */
     /* Usando la idea de las líneas de códigos anteriores
        muestre las estadísticas (tiempo de ejecución, número de comparaciones e
@@ -78,7 +88,14 @@ int main(int argc, char *argv[]) {
     */
     /* needs implementation */
 
+    reset_comparisons_counter();
+    reset_swaps_counter();
+    set_current_time();
 
+    quick_sort(copy, length);
+
+    printf("statistics for selection_sort\n");
+    printf("time elapsed=%g,    comparisons: %10u,    swaps: %10u\n", calculate_elapsed_time(), comparisons_number(), swaps_number());
     /* all the same for quick_sort */
     /* Usando la idea de las líneas de códigos anteriores
        muestre las estadísticas (tiempo de ejecución, número de comparaciones e
