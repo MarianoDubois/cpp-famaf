@@ -36,7 +36,7 @@ static void insert(int a[], unsigned int i) {
 
 void insertion_sort(int a[], unsigned int length) {
     for (unsigned int i = 1; i < length; ++i) {
-        insert(a, length);
+        insert(a, i);
     }
 }
 

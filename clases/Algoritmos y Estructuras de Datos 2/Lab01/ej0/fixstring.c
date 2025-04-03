@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <assert.h>
+#include <stdio.h>
 
 #include "fixstring.h"
 
@@ -29,13 +30,9 @@ bool fstring_eq(fixstring s1, fixstring s2) {
 bool fstring_less_eq(fixstring s1, fixstring s2) {
     bool less_eq = true;
     int k = 0;
-    while (k < FIXSTRING_MAX && less_eq == true)
+    while ()
     {
-        if (s1[k] > s2[k])
-        {
-            less_eq = false;
-        }
-        k++;
+        if (s1[k] == s2[]){}
     }
     return less_eq;
 }
