@@ -1,4 +1,33 @@
 clase 10/4/24
 
 evaluacion de funciones, para el caso de la lista del pdf es O(n^2) o O(n^3) o O(n)
-sort an array is equal to O(n log n)
+sort an array is equal to O(n log n) o O(n+k/kn) dependiendo de como sea el algoritmo
+
+cosas utiles:
+-------------------------------------------------------------------------------
+//c_cpp_properties.json
+{
+  "configurations": [
+    {
+      "name": "windows-gcc-x64",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "C:\\msys64(gcc_path)\\mingw64\\include/**",
+        "C:\\msys64(gcc_path)\\mingw64\\include\\c++\\14.2.0\\tr1/**"
+      ],
+      "compilerPath": "C:\\msys64(gcc_path)\\mingw64\\bin\\gcc.exe",
+      "cStandard": "${default}",
+      "cppStandard": "${default}",
+      "intelliSenseMode": "windows-gcc-x64",
+      "compilerArgs": [
+        ""
+      ]
+    }
+  ],
+  "version": 4
+}
+------------------------------------------------------------------------------
+//cd para los practicos con wsl2
+cd cpp-famaf/clases/Algoritmos\ y\ Estructuras\ de\ Datos\ 2/Lab0
+
+

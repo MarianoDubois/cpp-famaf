@@ -4,7 +4,8 @@
 #include "fixstring.h"
 
 
-unsigned int fstring_length(fixstring s) {
+unsigned int fstring_length(fixstring s) 
+{
     unsigned int i = 0;
     while (s[i] != '\0')
     {
@@ -13,35 +14,29 @@ unsigned int fstring_length(fixstring s) {
     return i;
 }
 
-bool fstring_eq(fixstring s1, fixstring s2) {
-    bool equal = true;
-    int j = 0;
-    while (j < FIXSTRING_MAX && equal == true)
-    {
-        if (s1[j] != s2[j])
-        {
-            equal = false;
-        }
-        j++;
+bool fstring_eq(fixstring s1, fixstring s2) 
+{
+    int i = 0;
+    while (s1[i] != '\0' && s2[i] != '\0') {
+        if (s1[i] != s2[i]) return false;
+        i++;
     }
-    return equal;
+    return s1[i] == s2[i];
 }
 
-bool fstring_less_eq(fixstring s1, fixstring s2) {
-    bool less_eq = true;
-    int k = 0;
-    while (k < FIXSTRING_MAX && less_eq)
+
+bool fstring_less_eq(fixstring s1, fixstring s2) 
+{
+    int i = 0;
+    while(s1[i] == s2[i] && s1[i] != '\0')
     {
-        if (s1[k] > s2[k])
-        {
-            less_eq = false;
-        }
-        k++;
+        i++;
     }
-    return less_eq;
+    return s1[i] <= s2[i];
 }
 
-void fstring_set(fixstring s1, const fixstring s2) {
+void fstring_set(fixstring s1, const fixstring s2)
+{
     int i=0;
     while (i<FIXSTRING_MAX && s2[i]!='\0') {
         s1[i] = s2[i];
@@ -50,7 +45,8 @@ void fstring_set(fixstring s1, const fixstring s2) {
     s1[i] = '\0';
 }
 
-void fstring_swap(fixstring s1,  fixstring s2) {
+void fstring_swap(fixstring s1,  fixstring s2) 
+{
     fixstring aux;
     fstring_set(aux,s1);
     fstring_set(s1,s2);

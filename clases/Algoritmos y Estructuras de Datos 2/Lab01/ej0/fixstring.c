@@ -13,27 +13,23 @@ unsigned int fstring_length(fixstring s) {
     return i;
 }
 
-bool fstring_eq(fixstring s1, fixstring s2) {
-    bool equal = true;
-    int j = 0;
-    while (j < FIXSTRING_MAX && equal == true)
-    {
-        if (s1[j] != s2[j])
-        {
-            equal = false;
-        }
-        j++;
+bool fstring_eq(fixstring s1, fixstring s2) 
+{
+    int i = 0;
+    while (s1[i] != '\0' && s2[i] != '\0') {
+        if (s1[i] != s2[i]) return false;
+        i++;
     }
-    return equal;
+    return s1[i] == s2[i];
 }
 
-bool fstring_less_eq(fixstring s1, fixstring s2) {
-    bool less_eq = true;
-    int k = 0;
-    while ()
+bool fstring_less_eq(fixstring s1, fixstring s2) 
+{
+    int i = 0;
+    while(s1[i] == s2[i] && s1[i] != '\0')
     {
-        if (s1[k] == s2[]){}
+        i++;
     }
-    return less_eq;
+    return s1[i] <= s2[i];
 }
 
