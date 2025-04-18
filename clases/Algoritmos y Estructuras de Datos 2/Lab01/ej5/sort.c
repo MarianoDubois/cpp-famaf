@@ -8,32 +8,28 @@
 #include "sort.h"
 #include "fixstring.h"
 
-static unsigned int partition(fixstring a[], unsigned int izq, unsigned int der) 
-{
-    unsigned int ppiv = izq;
+static unsigned int partition(fixstring a[], unsigned int izq, unsigned int der) {
     unsigned int i = izq + 1;
     unsigned int j = der;
+    unsigned int ppiv = izq;
 
-    array_dump(a, der);
-
-    while (i <= j)
-    {
-        if (goes_before(a[i], a[ppiv]))
-        {
+    while (i <= j) {
+        while (i <= der && goes_before(a[i], a[ppiv])) {
             i++;
         }
-        else if (goes_before(a[ppiv],a[j])){
+        while (j > izq && goes_before(a[ppiv], a[j])) {
             j--;
         }
-        else if (a[i] > a[ppiv] && a[j] < a[ppiv])
-        {
-            swap(a,i,j);
+        if (i < j) {
+            swap(a, i, j);
+            i++;
+            j--;
         }
     }
-    swap(a,ppiv,j);
-    ppiv = j;
-    return ppiv;
+    swap(a, ppiv, j);
+    return j;
 }
+
 
 static void quick_sort_rec(fixstring a[], unsigned int izq, unsigned int der) 
 {
