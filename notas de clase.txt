@@ -29,5 +29,9 @@ cosas utiles:
 ------------------------------------------------------------------------------
 //cd para los practicos con wsl2
 cd cpp-famaf/clases/Algoritmos\ y\ Estructuras\ de\ Datos\ 2/Lab0
+------------------------------------------------------------------------------
+lab02 ej1
+hacer 1 ciclo de partition con su respectivo swap para 
+tu vsc color theme es "Material theme darker high contrast"
 
 
