@@ -13,10 +13,27 @@
  * @param length Largo del arreglo.
  */
 bool tiene_cima(int a[], int length) {
+    int contador = 0;
 
-    // COMPLETAR!!
+    int n = length-1;
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d,",a[i]);
+    }
+    printf("%d\n",a[n]);
+    
+    while (a[contador] < a[contador+1] && contador < length - 1)
+    {
+        contador++;
+        printf("contador=%d\n",contador);
+    }
+    while (a[contador] > a[contador+1] && contador < length - 1)
+    {
+        contador++;
+        printf("contador=%d\n",contador);
+    }
 
-    return false;
+    return (contador+1 == length);
 }
 
 /**
@@ -32,8 +49,19 @@ bool tiene_cima(int a[], int length) {
  * @param length Largo del arreglo.
  */
 int cima(int a[], int length) {
+    int contador = 0;
 
-    // COMPLETAR!!
-
-    return 0;
+    int n = length-1;
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d,",a[i]);
+    }
+    printf("%d\n",a[n]);
+    
+    while (a[contador] < a[contador+1] && contador < length - 1)
+    {
+        contador++;
+        printf("contador=%d\n",contador);
+    }
+    return contador;
 }

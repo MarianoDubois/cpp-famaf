@@ -15,11 +15,12 @@ int main(){
 
 SIEMPRE las lineas se terminan con ; o { }
 
-SIEMPRE vas a tener que poener al inicion de todo #include <stdio.h> y talvez alguno mas como el de assert
+SIEMPRE vas a tener que poener al inicio de todo #include <stdio.h> y talvez alguno mas como el de assert
 
 SIEMPRE se corre en consola los siguiente comandos
 
-gcc -Wall -Wextra -std=c99 Clase1.c -o *nombre del archivo a correr*
+gcc -Wall -Werror -Wextra -pedantic -std=c99 -c Clase1.c ...todos los *nombre de archivo*.c... 
+gcc -Wall -Werror -Wextra -pedantic -std=c99 Clase1.o ...todos los *nombre de archivo*.o... -o *nombre del archivo a correr*
 si compilo ---->
 ./*nombre del archivo*
 
