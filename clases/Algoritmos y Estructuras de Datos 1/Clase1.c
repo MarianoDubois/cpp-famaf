@@ -86,16 +86,447 @@ typedef struct{  // poner struct *nombre del struct *sino que solo pones *nombre
 
 --inicializacion y asignacion de valores de un struct
 struct *nombre del struct* *nombre de la variable*;
-*nombre de la variable* *nombre de la variable a rellenar del struct*;
+*nombre de la variable*.*nombre de la variable a rellenar del struct* = *dato*;
 ...
-*nombre de la variable* *nombre de la variable a rellenar del struct*;
+*nombre de la variable*.*nombre de la variable a rellenar del struct* = *dato*;
 
 --assert
 assert(*condiciones de las variable*); // con condicion de las varibales es que se tiene que cumplir en ese momento del codigo o breakea automaticamente
 
-GLHF
+
+--------------------------------------------------------------------------------------------------------------------
+ayed2
+
+para hacer que al correr en ./main > archivo de output, osea que se le escribe dentro cosas
+./main < archivo de input, osea que el archivo recibe cositas de ahi dentro
+
+tenemos un nuevo tipo de dato, los enum, que son iterables, ejemplo: 
+typedef enum {january, february, march, april, may, june, july, august, september, october, november, december} month_t;
+
+pointers
+creacion:
+int num = 5;
+int* ptr = &num; //tiene el pointer ser del mismo tipo de dato que lo que queres que despues lea
+printf("%d", *ptr); //va a devolver el valor que haya en el registro que tenga asignado
+printf("%d", num); //va a printear lo mismo que la linea anterior
+printf("%p", ptr); //va a printear el numero del registro de memoria que tenga guardado
+
+arrays multidimensionales
+int a[n][m]...[infinitos campos];
+es iterable en cada longitud como siempre y puede ser de algun tipo de dato abstracto iterable/numerico
+
+ejemplo de ejs para ser mejor programnador!
+
+MAIN
+
+/*
+/* First, the standard lib includes, alphabetically ordered */
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+/* Then, this project's includes, alphabetically ordered */
+#include "weather_table.h"
+
+/* includes the new utils */
+#include "weather_utils.h"
+
+/**
+ * @brief print usage help
+ * @param[in] program_name Executable name
+ */
+void print_help(char *program_name) {
+    /* Print the usage help of this program. */
+    printf("Usage: %s <input file path>\n\n"
+           "Load climate data from a given file in disk.\n"
+           "\n"
+           "The input file must exist in disk and every line in it must have the following format:\n\n"
+           "<year> <month> <day> <temperature> <high> <low> <pressure> <moisture> <precipitations>\n\n"
+           "Those elements must be integers and will be copied into the multidimensional integer array 'a'.\n"
+           "\n\n",
+           program_name);
+}
+
+/**
+ * @brief reads file path from command line
+ *
+ * @param[in] argc amount of command line arguments
+ * @param[in] argv command line arguments
+ *
+ * @return An string containing read filepath
+ */
+char *parse_filepath(int argc, char *argv[]) {
+    /* Parse the filepath given by command line argument. */
+    char *result = NULL;
+
+    if (argc < 2) {
+        print_help(argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    result = argv[1];
+
+    return (result);
+}
+
+/**
+ * @brief Main program function
+ *
+ * @param[in] argc amount of command line arguments
+ * @param[in] argv command line arguments
+ *
+ * @return EXIT_SUCCESS when programs executes correctly, EXIT_FAILURE otherwise
+ */
+int main(int argc, char *argv[]) {
+    char *filepath = NULL;
+
+    /* parse the filepath given in command line arguments */
+    filepath = parse_filepath(argc, argv);
+
+    /* create a table variable */
+    WeatherTable table;
+
+    /* parse the file to fill the table */
+    table_from_file(table, filepath);
+
+    /* show the table in the screen */
+    table_dump(table);
+
+    /* ——— B: analisis ——— */
+
+    /* a) max historical temp */
+    int lowest_temp = lowest_min_temp(table);
+    printf(" \n Temperatura mínima histórica: %d°C \n", lowest_temp);
+
+    /* b) Max temp per year */
+    int max_by_year[YEARS];
+    highest_max_temp(table, max_by_year);
+    int rainiest_month[YEARS];
+    max_month_rainfall_by_year(table, rainiest_month);
+
+    printf(" \n Máxima temperatura por año, mes con mayor precipitación: \n");
+    for (int y = 0; y < YEARS; y++) {
+        printf("  Año: %d | Temp Max: %d | Mes con mas Prec: %d \n", 1980 + y, max_by_year[y], rainiest_month[y] + 1);
+    }
+
+    return EXIT_SUCCESS;
+}
+
+weather
+
+/*
+  @file weather.c
+  @brief Implements weather mesuarement structure and methods
+*/
+#include <stdlib.h>
+#include "weather.h"
+#include <assert.h>
+
+Weather weather_from_file(FILE* file)
+{
+    Weather weather;
+
+    int data = fscanf(file, "%d %d %d %u %u %u\n", &weather._average_temp, &weather._max_temp, &weather._min_temp, 
+                                               &weather._pressure, &weather._moisture, &weather._rainfall);
+     if (data != 6) 
+     {
+        fprintf(stderr, "Formato inválido en datos de clima.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    return weather;
+}
+
+void weather_to_file(FILE* file, Weather weather)
+{
+    fprintf(file, "%d %d %d %u %u %u", weather._average_temp,
+            weather._max_temp, weather._min_temp, weather._pressure, weather._moisture, weather._rainfall);
+}
+
+
+weather.h 
+
+/*
+  @file weather.h
+  @brief Defines weather mesuarement structure and methods
 */
 
+#ifndef _WEATHER_H
+#define _WEATHER_H
+#include <stdio.h>
+
+/** @brief Type used to represent a weather mesuarement.*/
+typedef struct _weather
+{
+    int _average_temp;
+    int _max_temp;
+    int _min_temp;
+    unsigned int _pressure;
+    unsigned int _moisture;
+    unsigned int _rainfall;
+} Weather;
+
+/**
+ * @brief reads weather mesureament from file line
+ * @details
+ * Weather file line must contain:
+ * <int> <int> <int> <unsigned int> <unsigned int> <unsigned int>
+ *
+ * @param[in] file Opened file stream
+ * @return Weather structure which contain read information from file
+ */
+Weather weather_from_file(FILE* file);
+
+/**
+ * @brief writes weather information into opened file stream
+ * @details
+ * The line will be written using this format:
+ * <avg_temp> <max_temp> <min_temp> <pressure> <moisture> <rainfall>
+ *
+ * @param[in] file Opened file stream
+ * @param[in] weather Weather mesuarement to be written
+ */
+void weather_to_file(FILE* file, Weather weather);
+
+
+#endif //_WEATHER_H
+
+
+weather_table
+
+/*
+  @file weather_table.c
+  @brief Weather table implementation
+*/
+#include <assert.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "weather_table.h"
+
+/**
+ * @brief Write the content of the table 'a' into stdout.
+ * @param[in] a table to dump in stdout
+ */
+void table_dump(WeatherTable a) {
+    for (unsigned int year = 0u; year < YEARS; ++year) {
+        for (month_t month = january; month <= december; ++month) {
+            for (unsigned int day = 0u; day < DAYS; ++day) {
+                // imprimir año, mes y día
+                fprintf(stdout, "%u %u %u ", year + FST_YEAR, month + 1, day + 1);
+
+                // imprimir datos para ese día
+                weather_to_file(stdout, a[year][month][day]);
+
+                // imprimir salto de línea
+                fprintf(stdout, "\n");
+            }
+        }
+    }
+}
+
+/**
+ * @brief reads a table of weather information from file
+ * @details
+ *
+ *  Each element is read from the file located at 'filepath'.
+ *  The file must exist in disk and must have its contents in a sequence of
+ *  lines, each with the following format:
+ *
+ *   <year> <month> <day> <temperature> <high> <low> <pressure> <moisture> <precipitations>
+ *
+ *   Those elements are copied into the multidimensional table 'a'.
+ *
+ * @param a table which will contain read file
+ * @param filepath file with weather data
+ */
+void table_from_file(WeatherTable a, const char *filepath) {
+    FILE *file = NULL;
+
+    file = fopen(filepath, "r");
+    if (file == NULL) {
+        fprintf(stderr, "File does not exist.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    unsigned int k_year = 0u;
+    unsigned int k_month = 0u;
+    unsigned int k_day = 0u;
+    while (!feof(file)) {
+        int res = fscanf(file, " %u %u %u ", &k_year, &k_month, &k_day);
+        if (res != 3) {
+            fprintf(stderr, "Invalid table.\n");
+            exit(EXIT_FAILURE);
+        }
+
+        // Ir a la función 'weather_from_file' en weather.c y completar!
+        Weather weather = weather_from_file(file);
+
+        // También completar acá:
+        a[k_year-FST_YEAR][k_month-1][k_day-1] = weather;
+        // Guardar la medición de clima en el arreglo multidimensional.
+    }
+
+    fclose(file);
+}
+
+
+weather_table.h
+
+/*
+  @file weather_table.h
+  @brief defines table helpers methods. These methods operates over multidimensional (year, month, day) array of weather
+*/
+#ifndef _TABLE_HELPERS_H
+#define _TABLE_HELPERS_H
+
+#include <stdbool.h>
+#include "weather.h"
+
+#define FST_YEAR 1980
+#define LST_YEAR 2016
+#define YEARS 37
+
+typedef enum {january, february, march, april, may, june, july, august, september, october, november, december} month_t;
+
+#define MONTHS 12
+
+#define DAYS 28
+
+typedef Weather WeatherTable [YEARS][MONTHS][DAYS];
+
+/**
+ * @brief Write the content of the table 'a' into stdout.
+ * @param[in] a table to dump in stdout
+ */
+void table_dump(WeatherTable a);
+
+
+/**
+ * @brief reads an table of weather information from file
+ * @details
+ *
+ *  Each element is read from the file located at 'filepath'.
+ *  The file must exist in disk and must have its contents in a sequence of
+ *  lines, each with the following format:
+ *
+ *   <year> <month> <day> <temperature> <high> <low> <pressure> <moisture> <precipitations>
+ *
+ *   Those elements are copied into the multidimensional table 'a'.
+ *
+ * @param a table which will contain read file
+ * @param filepath file with weather data
+ */
+void table_from_file(WeatherTable a, const char *filepath);
+
+#endif // _TABLE_HELPERS_H
+
+
+
+weather_utils
+
+
+/* weather_utils.c */
+#include <limits.h>
+#include "weather_utils.h"
+#include "weather_table.h"
+
+int lowest_min_temp(Weather weather[YEARS][MONTHS][DAYS]) {
+    int min = INT_MAX;
+    for (int y = 0; y < YEARS; y++) {
+        for (int m = 0; m < MONTHS; m++) {
+            for (int d = 0; d < DAYS; d++) {
+                if (weather[y][m][d]._min_temp < min) {
+                    min = weather[y][m][d]._min_temp;
+                }
+            }
+        }
+    }
+    return min;
+}
+
+void highest_max_temp(Weather weather[YEARS][MONTHS][DAYS], int output[YEARS]) {
+    for (int y = 0; y < YEARS; y++) {
+        int max_t = weather[y][0][0]._max_temp;
+        for (int m = 0; m < MONTHS; m++) {
+            for (int d = 0; d < DAYS; d++) {
+                if (weather[y][m][d]._max_temp > max_t) {
+                    max_t = weather[y][m][d]._max_temp;
+                }
+            }
+        }
+        output[y] = max_t;
+    }
+}
+
+int sum_month_rainfall(Weather weather[YEARS][MONTHS][DAYS], int y, int m) {
+    int sum = 0;
+    for (int d = 0; d < DAYS; d++) {
+        sum += weather[y][m][d]._rainfall;
+    }
+    return sum;
+}
+
+void max_month_rainfall_by_year(Weather weather[YEARS][MONTHS][DAYS], int output[YEARS]) {
+    for (int y = 0; y < YEARS; y++) {
+        int best_m = 0;
+        int best_rain = sum_month_rainfall(weather, y, 0);
+        for (int m = 1; m < MONTHS; m++) {
+            int r = sum_month_rainfall(weather, y, m);
+            if (r > best_rain) {
+                best_rain = r;
+                best_m = m;
+            }
+        }
+        output[y] = best_m;
+    }
+}
+
+
+weather_utils.h
+
+
+#ifndef WEATHER_UTILS_H
+#define WEATHER_UTILS_H
+
+#include "weather_table.h"
+
+/**
+ * Devuelve la temperatura mínima registrada
+ * en todo el período (años × meses × días).
+ */
+int lowest_min_temp(Weather weather[YEARS][MONTHS][DAYS]);
+
+/**
+ * Devuelve, para cada año, la temperatura máxima registrada.
+ * Según tu implementación, retorna un entero (aunque el código actual
+ * almacena un array interno; quizá necesites ajustar la firma si quieres
+ * devolver el array completo).
+ */
+void highest_max_temp(Weather weather[YEARS][MONTHS][DAYS], int output[YEARS]);
+
+/**
+ * Suma la precipitación de un mes dado (year, month).
+ */
+int sum_month_rainfall(Weather weather[YEARS][MONTHS][DAYS],
+                       int year,
+                       int month);
+
+/**
+ * Para cada año, calcula el mes con más lluvia.
+ * La implementación actual lo guarda en un array interno;
+ */
+void max_month_rainfall_by_year(Weather weather[YEARS][MONTHS][DAYS], int output[YEARS]);
+
+#endif /* WEATHER_UTILS_H */
+
+
+
+
+GLHF
+*/
+*/
 /////////////////////////////////////////////////////////////{  ejs NARI  }/////////////////////////////////////////////////////////////////////////////////
 
 //lab1

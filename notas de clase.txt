@@ -33,5 +33,10 @@ cd cpp-famaf/clases/Algoritmos\ y\ Estructuras\ de\ Datos\ 2/Lab0
 lab02 ej1
 hacer 1 ciclo de partition con su respectivo swap para 
 tu vsc color theme es "Material theme darker high contrast"
-
+------------------------------------------------------------------------------
+lab03 ej1
+col 4,5,6 / 10 grados centigrados
+col 7 / 10 presion atmosferica
+col 9 / 100 precipitaciones
+pasarlos a float()
 
