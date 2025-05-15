@@ -36,7 +36,7 @@ int * array_from_file(const char *filepath, size_t *length) {
     int *array=NULL;
     int n=0;
     fscanf(file,"%i", &n);
-    array = malloc(n);
+    array = malloc(sizeof(n));
     *length = n;
     // COMPLETAR: - Reservar memoria para array
     //            - Cambiar el valor de *length para que contenga el tamaño del
