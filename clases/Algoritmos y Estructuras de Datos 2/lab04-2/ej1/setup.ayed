@@ -2,6 +2,7 @@ type node = tuple
     data: int
     next: pointer of node
 end tuple
+
 type list = pointer of node
 
 var i: int
