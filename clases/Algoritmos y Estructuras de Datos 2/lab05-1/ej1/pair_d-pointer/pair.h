@@ -46,7 +46,7 @@ pair_t pair_swapped(pair_t p);
  *
  */
 
-pair_t pair_destroy(pair_t p);
+void pair_destroy(pair_t p);
 /*
  * DESC: Free memory if its necesary
  *

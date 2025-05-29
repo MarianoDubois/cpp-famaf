@@ -1,4 +1,5 @@
 #include "pair.h"
+#include <assert.h>
 
 pair_t pair_new(int x, int y){
     pair_t new;

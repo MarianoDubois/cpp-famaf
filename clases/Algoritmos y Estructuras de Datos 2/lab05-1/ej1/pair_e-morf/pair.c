@@ -2,20 +2,25 @@
 #include <assert.h>
 #include "pair.h"
 
-pair_t pair_new(int x, int y){
+struct s_pair_t {
+    elem fst;
+    elem snd;
+};
+
+pair_t pair_new(elem x, elem y){
     pair_t p = NULL;
-    p = malloc(sizeof(int)*2);
+    p = malloc(sizeof(elem)*2);
     p->fst = x;
     p->snd = y;
     return p;
 }
 
-int pair_first(pair_t p){
+elem pair_first(pair_t p){
     assert(p != NULL);
     return p->fst;
 }
 
-int pair_second(pair_t p){
+elem pair_second(pair_t p){
     assert(p != NULL);
     return p->snd;
 }

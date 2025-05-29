@@ -20,8 +20,8 @@ int main(void) {
     printf("q = ");
     show_pair(q);
     // Se destruyen p y q
-    p = pair_destroy(p);
-    q = pair_destroy(q);
+    pair_destroy(p);
+    pair_destroy(q);
     return EXIT_SUCCESS;
 }
 

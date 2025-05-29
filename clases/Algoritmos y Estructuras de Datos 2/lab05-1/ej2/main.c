@@ -38,7 +38,7 @@ char *parse_filepath(int argc, char *argv[]) {
 }
 
 bool matching_parentheses(FILE * file) {
-    counter c = NULL;
+    counter c = counter_init();
     bool balanced = true;
     char letter;
 
@@ -53,6 +53,7 @@ bool matching_parentheses(FILE * file) {
         }
     }
     return (balanced && counter_is_init(c));
+    counter_destroy(c);
 }
 
 int main(int argc, char *argv[]) {
@@ -71,6 +72,7 @@ int main(int argc, char *argv[]) {
     } else {
         printf("Parentheses mismatch.\n");
     }
+
 
     return (EXIT_SUCCESS);
 }
