@@ -60,6 +60,11 @@ int length(list l);
 /*
  * DESC: Devuelve la cantidad de elementos de la lista l 
  */
+
+ list copy_list(list l1);
+/*
+ * DESC: Copia todos los elementos de l1 en la nueva lista l2
+ */
  
 list concat(list l1, list l2);
 /*
@@ -83,10 +88,7 @@ list drop(list l, int n);
  * DESC: Elimina los primeros n elementos de l 
  */
 
- list copy_list(list l1);
-/*
- * DESC: Copia todos los elementos de l1 en la nueva lista l2
- */
+
 
  /* Destroy */
 void list_destroy(list l);

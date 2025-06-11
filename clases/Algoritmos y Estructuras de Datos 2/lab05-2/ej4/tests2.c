@@ -3,9 +3,10 @@
 #include "list.h"
 
 #define MAX_LENGTH 10
-#define N_TESTCASES_TAIL 3
-#define N_TESTCASES_ADDR 4
-#define N_TESTCASES_TAKE 5
+#define N_TESTCASES_TAIL 4
+#define N_TESTCASES_ADDR 5
+#define N_TESTCASES_TAKE 6
+#define N_TESTCASES_DROP 6
 
 // construye una lista a partir de un arreglo
 // (usa los constructores de lista empty y addl)
@@ -48,6 +49,7 @@ void test_tail() {
       { {-2}, 1, {}, 0 },             // testea: tail([-2]) == []
       { {1, -2}, 2, {-2}, 1 },        // testea: tail([1, -2]) == [-2]
       { {8, 1, -2}, 3, {1, -2}, 2 },  // testea: tail([8, 1, -2]) == [1, -2]
+      { {7, 7, 7, 7}, 4, {7, 7, 7}, 3 },
     };
 
     list input;
@@ -92,7 +94,8 @@ void test_addr() {
       { {8, 1, -2}, 3, 44, {8, 1, -2, 44}, 4 },  // testea: addr([8, 1, -2], 44) == [8, 1, -2, 44]
       { {1, -2}, 2, 44, {1, -2, 44}, 3 },        // testea: addr([1, -2], 44) == [1, -2, 44]
       { {-2}, 1, 44, {-2, 44}, 2 },              // testea: addr([-2], 44) == [-2, 44]
-      { {}, 0, 44, {44}, 1 },                    // testea: addr([], 44) == [44]      
+      { {}, 0, 44, {44}, 1 },                    // testea: addr([], 44) == [44]
+      { {15, 33 }, 2, 44, {15, 33, 44}, 3},      
     };
 
     list input;
@@ -139,6 +142,7 @@ void test_take() {
       { {8, 1, -2}, 3, 2, {8, 1}, 2 },      // testea: take([8, 1, -2], 2) == [8, 1]
       { {8, 1, -2}, 3, 3, {8, 1, -2}, 3 },  // testea: take([8, 1, -2], 3) == [8, 1, -2]
       { {8, 1, -2}, 3, 4, {8, 1, -2}, 3 },  // testea: take([8, 1, -2], 4) == [8, 1, -2]
+      { {4 ,5 ,6 ,7 ,8}, 5, 1, {4}, 1},
     };
 
     list input;
@@ -167,10 +171,59 @@ void test_take() {
     }
 }
 
+
+void test_drop() {
+    // representación de un solo caso de test
+    struct drop_testcase {
+        int a[MAX_LENGTH];       // elementos de la lista de entrada
+        int length;              // largo de la lista de entrada
+        int n;                   // cantidad de elementos a tomar
+        int result[MAX_LENGTH];  // elementos esperados de la lista resultado
+        int result_length;       // largo esperado de la lista resultado
+    };
+
+    // casos de test (uno por línea)
+    struct drop_testcase tests[N_TESTCASES_DROP] = {
+      { {8, 1, -2}, 3, 3, {}, 0 },          // testea: drop([8, 1, -2], 0) == [8,1,-2]
+      { {8, 1, -2}, 3, 2, {8}, 1 },         // testea: drop([8, 1, -2], 1) == [1,-2]
+      { {8, 1, -2}, 3, 1, {8, 1}, 2 },      // testea: drop([8, 1, -2], 2) == [-2]
+      { {8, 1, -2}, 3, 0, {8, 1, -2}, 3 },  // testea: drop([8, 1, -2], 3) == []
+      { {8, 1, -2}, 3, 0, {8, 1, -2}, 3 },  // testea: drop([8, 1, -2], 4) == []
+      { {4, 5, 6, 7, 8}, 5, 4, {4}, 1},          // testea: drop([4,5,6,7,8], 4) == [8]
+    };
+
+    list input;
+    list result, expected_result;
+
+    printf("TESTING drop\n");
+
+    for (int i=0; i < N_TESTCASES_DROP; i++) {
+        printf("Test case %i: ", i+1);
+
+        // creamos la lista de entrada
+        input = array_to_list(tests[i].a, tests[i].length);
+
+        // TEST! llamamos la función a testear
+        result = drop(input, tests[i].n);
+
+        // creamos la lista resultado esperada
+        expected_result = array_to_list(tests[i].result, tests[i].result_length);
+
+        // comparamos resultado obtenido con resultado esperado
+        if (is_equal_to(result, expected_result)) {
+            printf("OK\n");
+        } else {
+            printf("FAILED\n");
+        }
+    }
+}
+
+
 int main() {
     test_tail();
     test_addr();
     test_take();
+    test_drop();
 
     return 0;
 }

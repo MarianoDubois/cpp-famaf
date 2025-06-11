@@ -4,13 +4,18 @@
 
 #include "list.h"
 
+typedef struct _list {
+    elem data;
+    struct _list *next;
+} Node;
+
 /* Constructors */
 list empty(void){
     list l = NULL;
     return l;
 }
 
-list addl(list l, list_elem e){
+list addl(elem e, list l){
     Node* p = NULL;
     p = malloc(sizeof(Node));
     p->data = e;
@@ -26,9 +31,9 @@ bool is_empty(list l){
     return (l == NULL);
 }
 
-list_elem head(list l){
+elem head(list l){
     assert(!(is_empty(l)));
-    list_elem e = l->data;
+    elem e = l->data;
     return e;
 }
 
@@ -44,7 +49,7 @@ list tail(list l){
 }
 
 
-list addr (list l, list_elem e){
+list addr (list l, elem e){
     Node* p = NULL; 
     Node* q = NULL;
     q = malloc(sizeof(Node));
@@ -129,11 +134,11 @@ list concat(list l1, list l2){
     return l1;
 }
 
-list_elem index(list l, int n){
+elem index(list l, int n){
     assert(length(l)>n);
     Node* p = NULL;
     int i = 0;
-    list_elem e;
+    elem e;
     p = l;
     while (i != n)
     {
