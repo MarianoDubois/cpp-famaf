@@ -7,6 +7,7 @@
 #define N_TESTCASES_ADDR 5
 #define N_TESTCASES_TAKE 6
 #define N_TESTCASES_DROP 6
+#define N_TESTCASES_CONCAT 6
 
 // construye una lista a partir de un arreglo
 // (usa los constructores de lista empty y addl)
@@ -34,6 +35,8 @@ bool is_equal_to(list l1, list l2) {
     return i == len1 && len1 == len2;
 }
 
+
+//-----------------------------------------TAIL-----------------------------------------
 // Testeo de la función tail()
 void test_tail() {
     // representación de un solo caso de test
@@ -78,6 +81,8 @@ void test_tail() {
     }
 }
 
+
+//--------------------------------------ADDR------------------------------------------------
 // Testeo de la función addr()
 void test_addr() {
     // representación de un solo caso de test
@@ -124,6 +129,8 @@ void test_addr() {
     }
 }
 
+
+//----------------------------------------TAKE---------------------------------------------
 // Testeo de la función take()
 void test_take() {
     // representación de un solo caso de test
@@ -171,6 +178,7 @@ void test_take() {
     }
 }
 
+//-----------------------------------DROP------------------------------------------
 
 void test_drop() {
     // representación de un solo caso de test
@@ -184,12 +192,12 @@ void test_drop() {
 
     // casos de test (uno por línea)
     struct drop_testcase tests[N_TESTCASES_DROP] = {
-      { {8, 1, -2}, 3, 3, {}, 0 },          // testea: drop([8, 1, -2], 0) == [8,1,-2]
-      { {8, 1, -2}, 3, 2, {8}, 1 },         // testea: drop([8, 1, -2], 1) == [1,-2]
-      { {8, 1, -2}, 3, 1, {8, 1}, 2 },      // testea: drop([8, 1, -2], 2) == [-2]
-      { {8, 1, -2}, 3, 0, {8, 1, -2}, 3 },  // testea: drop([8, 1, -2], 3) == []
-      { {8, 1, -2}, 3, 0, {8, 1, -2}, 3 },  // testea: drop([8, 1, -2], 4) == []
-      { {4, 5, 6, 7, 8}, 5, 4, {4}, 1},          // testea: drop([4,5,6,7,8], 4) == [8]
+      { {8, 1, -2}, 3, 0, {8, 1, -2}, 3 },          // testea: drop([8, 1, -2], 0) == [8,1,-2]
+      { {8, 1, -2}, 3, 1, {1,-2}, 2 },         // testea: drop([8, 1, -2], 1) == [1,-2]
+      { {8, 1, -2}, 3, 2, {-2}, 1 },      // testea: drop([8, 1, -2], 2) == [-2]
+      { {8, 1, -2}, 3, 3, {}, 0 },  // testea: drop([8, 1, -2], 3) == []
+      { {8, 1, -2}, 3, 4, {}, 0 },  // testea: drop([8, 1, -2], 4) == []
+      { {4, 5, 6, 7, 8}, 5, 4, {8}, 1},          // testea: drop([4,5,6,7,8], 4) == [8]
     };
 
     list input;
@@ -218,12 +226,66 @@ void test_drop() {
     }
 }
 
+//-----------------------------------concat------------------------------------------
+
+void test_concat() {
+    // representación de un solo caso de test
+    struct concat_testcase {
+        int a[MAX_LENGTH];       // elementos de la lista de entrada
+        int a_length;              // largo de la lista de entrada
+        int b[MAX_LENGTH];
+        int b_length;
+        int result[MAX_LENGTH];  // elementos esperados de la lista resultado
+        int result_length;       // largo esperado de la lista resultado
+    };
+
+    // casos de test (uno por línea)
+    struct concat_testcase tests[N_TESTCASES_CONCAT] = {
+      { {8, 1, -2}, 3, {8, 1, -2}, 3, {8, 1, -2, 8, 1, -2}, 6},          // testea: concat([8, 1, -2], 0) == [8,1,-2]
+      { {8, 1, -2}, 3, {1,-2}, 2, {8, 1, -2, 1, -2}, 5},         // testea: concat([8, 1, -2], 1) == [1,-2]
+      { {8, 1, -2}, 3, {-2}, 1, {8, 1, -2, -2}, 4},      // testea: concat([8, 1, -2], 2) == [-2]
+      { {8, 1, -2}, 3, {}, 0, {8, 1, -2}, 3},  // testea: concat([8, 1, -2], 3) == []
+      { {}, 0, {}, 0, {}, 0},
+      { {4, 5, 6, 7, 8}, 5, {8}, 1, {4,5,6,7,8,8}, 6},          // testea: concat([4,5,6,7,8], 4) == [8]
+    };
+
+    list input1;
+    list input2;
+    list result, expected_result;
+
+    printf("TESTING concat\n");
+
+    for (int i=0; i < N_TESTCASES_CONCAT; i++) {
+        printf("Test case %i: ", i+1);
+
+        // creamos la lista de entrada
+        input1 = array_to_list(tests[i].a, tests[i].a_length);
+
+        // creamos la lista de entrada
+        input2 = array_to_list(tests[i].b, tests[i].b_length);
+
+        // TEST! llamamos la función a testear
+        result = concat(input1, input2);
+
+        // creamos la lista resultado esperada
+        expected_result = array_to_list(tests[i].result, tests[i].result_length);
+
+        // comparamos resultado obtenido con resultado esperado
+        if (is_equal_to(result, expected_result)) {
+            printf("OK\n");
+        } else {
+            printf("FAILED\n");
+        }
+    }
+}
+
 
 int main() {
     test_tail();
     test_addr();
     test_take();
     test_drop();
+    test_concat();
 
     return 0;
 }

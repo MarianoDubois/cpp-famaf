@@ -152,15 +152,29 @@ elem index(list l, int n){
 list take(list l, int n){
     Node* p = NULL;
     Node* q = NULL;
+    int i = 1;
     
     p = l;
+
     
-    for(int i = 0 ; i<n ; i++)
+    while(n>=1 && i<n && p != NULL)
     {
         p = p->next;
+        i++;
     }
 
-    if (p != NULL)
+    if (n <= 0)
+    {
+        q = p;
+        while (p != NULL)
+        {
+            p = p->next;
+            free(q);
+            q = p;
+            l = empty();
+        }
+    }
+    else if (p != NULL)
     {
         q = p;
         p = p->next;
@@ -180,14 +194,16 @@ list take(list l, int n){
 list drop(list l, int n){
     Node* p = NULL;
     Node* q = NULL;
+    int i = 0;
     
     p = l;
     
-    for(int i = 0 ; i<n ; i++)
+    while (i<n && p != NULL)
     {
         q = p;
         p = p->next;
         free(q);
+        i++;
     }
 
     l = p;

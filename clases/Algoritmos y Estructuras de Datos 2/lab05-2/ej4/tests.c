@@ -3,9 +3,9 @@
 #include "list.h"
 
 #define MAX_LENGTH 10
-#define N_TESTCASES_HEAD 3
-#define N_TESTCASES_INDEX 3
-#define N_TESTCASES_LENGTH 4
+#define N_TESTCASES_HEAD 4
+#define N_TESTCASES_INDEX 4
+#define N_TESTCASES_LENGTH 5
 
 // construye una lista a partir de un arreglo
 // (usa los constructores de lista empty y addl)
